@@ -46,22 +46,15 @@ public class MarchMadnessGUI extends Application {
     private Button clearButton;
     private Button resetButton;
     private Button finalizeButton;
-    
-    private Bracket emptyBracket;
-    private Bracket selectedBracket;
-    private Bracket simResultBracket;
 
-    
     private ArrayList<Bracket> playerBrackets;
     private HashMap<String, Bracket> playerMap;
 
-    
+    private static final Bracket MASTER = new Bracket(TournamentInfo.loadStartingBracket());
   
     private ScoreBoardPane scoreBoard;
     private BracketPane bracketPane;
     private GridPane loginP;
-    //private TeamInfo teamInfo;
-    
     
     @Override
     public void start(Stage primaryStage) {
@@ -290,20 +283,19 @@ public class MarchMadnessGUI extends Application {
 
                 if (Objects.equals(password1, playerPass)) {
                     // load bracket
-                    //
-                    // bracketPane.setCurrent(playerMap.get(name));
+                    bracketPane.setCurrent(playerMap.get(name));
                     System.out.println("load bracket of user: " + name);
                 } else {
+                    // TODO handle this
                     System.out.println("Password incorrect!");
                 }
 
             } else {
                 //create new bracket
                 System.out.println("User " + name + " did not exist, created new bracket");
-                Bracket tmpPlayerBracket = new Bracket(emptyBracket, name);
+                Bracket tmpPlayerBracket = new Bracket(MASTER, name);
                 playerBrackets.add(tmpPlayerBracket);
                 tmpPlayerBracket.setPassword(playerPass);
-
                 playerMap.put(name, tmpPlayerBracket);
             }
         });
